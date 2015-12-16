@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="datawarehousedb01">
+  <component name="PublishConfigData" serverName="datawarehousedb01" showNewOnTargetInSync="false">
     <serverData>
       <paths name="datawarehousedb01">
         <serverdata>

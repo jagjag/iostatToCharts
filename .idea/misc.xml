@@ -11,11 +11,6 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Remote Python 2.6.6 (sftp://gcpadmin@10.10.0.33:22/usr/bin/python)" project-jdk-type="Python SDK" />
-  <component name="SshConsoleOptionsProvider">
-    <option name="myEncoding" value="UTF-8" />
-    <option name="myConnectionType" value="REMOTE_SDK" />
-    <option name="myConnectionId" value="sftp://gcpadmin@10.10.0.33:22/usr/bin/python" />
-  </component>
   <component name="VagrantSettings">
     <option name="instanceFolder" value="" />
     <option name="vagrantExecutable" value="vagrant.bat" />
