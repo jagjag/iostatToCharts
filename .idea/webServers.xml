@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="b01619fe-8e65-4c42-8775-50a6ec7ac129" name="datawarehousedb01" url="http://10.10.0.33:8000">
+        <fileTransfer host="10.10.0.33" port="22" rootFolder="/home/gcpadmin" accessType="SFTP" password="dfeedfeddfc6dfdedfe7df9ddfd3df9c" username="gcpadmin">
+          <advancedOptions>
+            <advancedOptions controlEncoding="UTF-8" dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
