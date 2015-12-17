@@ -1,6 +1,7 @@
 import re
 import copy
-
+import time
+import datetime
 
 #  run a  iostat  command like this:
 # iostat -dNxt 60 > iostat.data
@@ -13,21 +14,29 @@ class iostatParser():
             self.datadatetime=''
             self.datatitle=[]
             pattnewline = re.compile('^$')
-            pattdatetime = re.compile('^\d\/\d.*[P|A]M$')
+            pattdatetime = re.compile('^\d.*[P|A]M$')
             patttitlename = re.compile('Device:.*')
-            for x in open(filepath,'r'):
+
+            from itertools import islice
+            input_file = open(filepath,'r').readlines(400)
+            #for x in open(filepath,'r'):
+            for x in islice(input_file, 1, None):
                 if pattnewline.findall(x):
                     continue
                 elif pattdatetime.findall(x):
-                    self.datadatetime=x.strip()   #TODO: add  convert string to datetime
+                    # 12/11/2015 09:30:46 AM
+                    timeArray = time.strptime(x.strip(),"%m/%d/%Y %I:%M:%S %p")
+                    timeStamp = float(time.mktime(timeArray))
+                    self.datadatetime=datetime.datetime.utcfromtimestamp(timeStamp)
+                    #print self.datadatetime
                 elif patttitlename.findall(x):
-                    if self.datatitle.count() == 0:
+                    if self.datatitle == []:
                         y = x.strip().split()
-                        #for i in y :
-                        #    if i == 'Device':
-                        #        continue
-                        #    else:
-                        self.datatitle=copy.deepcopy(x)
+                        for y1 in y:
+                            tdict={}
+                            tdict.setdefault(y1,[])
+                            self.datatitle.append(copy.deepcopy(tdict))
+                        print self.datatitle
                     else:
                         continue
                 else:
@@ -44,19 +53,17 @@ class iostatParser():
                     #       { 'sda': [ ['datetime','0.1'], ['datetime','0.2'],] }
                     #  }
                     realdata=x.strip().split()
-                    for i in realdata:
+                    print realdata
 
-
+                    #for i in realdata:
 
 
     def toJSON(self):
         pass
 
     def Show(self):
-        for i in self.datalist:
-            print i
-
+        pass
 
 
 if __name__ == '__main__':
-    iostatParser('data//iostat.data').Show()
+    iostatParser('data//iostat.data')
