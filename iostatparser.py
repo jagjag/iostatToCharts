@@ -23,12 +23,13 @@ class iostatParser():
             for x in islice(input_file, 1, None):
                 if pattnewline.findall(x):
                     continue
-                elif pattdatetime.findall(x):
+                elif pattdatetime.findall(x):   ## TODO: have problem here
                     # 12/11/2015 09:30:46 AM
-                    timeArray = time.strptime(x.strip(),"%m/%d/%Y %I:%M:%S %p")
-                    timeStamp = float(time.mktime(timeArray))
-                    self.datadatetime=datetime.datetime.utcfromtimestamp(timeStamp)
+                    #timeArray = time.strptime(x.strip(),"%m/%d/%Y %I:%M:%S %p")
+                    #timeStamp = float(time.mktime(timeArray))
+                    #self.datadatetime=datetime.datetime.utcfromtimestamp(timeStamp)
                     #print self.datadatetime
+                    self.datadatetime=x
                 elif patttitlename.findall(x):
                     if self.datatitle == []:
                         y = x.strip().split()
@@ -52,18 +53,53 @@ class iostatParser():
                     #  { 'r/s':
                     #       { 'sda': [ ['datetime','0.1'], ['datetime','0.2'],] }
                     #  }
+                    # it is  a little complex .   and  we will rewrite later
+                    #>>> abc[3]
+                    #{'r/s': []}
+                    #>>> abc[3].setdefault('r/s').append([1,2])
+                    #>>> abc[3]
+                    #{'r/s': [[1, 2]]}
+                    #>>> abc[3].setdefault('r/s').append([1,2])
+                    #>>> abc[3]
+                    #{'r/s': [[1, 2], [1, 2]]}
+                    #>>> abc[3].setdefault('r/s').append([1,2])
+                    #>>> abc[3]['r/s']
+                    #[[1, 2], [1, 2], [1, 2]]
+                    #>>> abc[3]['r/s'][1]
+                    #[1, 2]
+                    #>>> abc[3]['r/s'][1][1]
+                    #2
+                    #>>> abc[3]['r/s'][0][0]
+                    #1
+                    #  abc[3][abc[3].keys()[0]]
+                    #  [[1, 2], [1, 2], [1, 2]]
+
+
                     realdata=x.strip().split()
-                    print realdata
+                    dataItr=1
+                    while(dataItr < len(self.datatitle)):
+                         self.datatitle[dataItr].setdefault(self.datatitle[dataItr].keys()[0])\
+                             .append([str(self.datadatetime), realdata[dataItr]])
+                         #  self.datatitile is a list , which is a container of iostat column
+                         #  self.datatitle[dataItr] is dict .
+                         #  self.datatitle[dataItr].keys()[0]) is a string , which is the key of self.datatitle[dataItr]
+                         dataItr = dataItr + 1
 
+                    #print realdata
                     #for i in realdata:
-
-
-    def toJSON(self):
+    def tojson(self):
         pass
 
-    def Show(self):
-        pass
+    def show(self):
+        for i in self.datatitle:
+            print i
+
+    def get(self):
+        return self.datatitle
 
 
 if __name__ == '__main__':
-    iostatParser('data//iostat.data')
+   aiosatp= iostatParser('data//iostat.data')
+   aiosatp.show()
+   print len(aiosatp.get())
+
