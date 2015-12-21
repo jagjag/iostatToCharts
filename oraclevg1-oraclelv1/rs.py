@@ -18,15 +18,20 @@ def main():
     realXdot=list()
     adjDt=dateArray
     #for i in range(1,len(realYdot+1):
+    fff=[]
     i=len(realYdot)
-    while(i): 
+    while(i):
         adjDt= adjDt + datetime.timedelta(seconds = 10)
-        print(adjDt) 
-        realXdot.append(adjDt)
+        #print(adjDt)
+        fff.append([adjDt,realXdot[i-1]])
+        #realXdot.append(adjDt)
         i=i-1
+
+
     plt.figure(figsize=(150,15))
-    plt.plot(realXdot,realYdot,linewidth=0.8)
-    plt.savefig('rs.png')     
+    #plt.plot(realXdot,realYdot,linewidth=0.8)
+    plt.plot(fff,linewidth=0.8)
+    plt.savefig('rs.png')
 
 if __name__ == '__main__':
     main()

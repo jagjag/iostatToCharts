@@ -10,7 +10,7 @@
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Remote Python 2.6.6 (sftp://gcpadmin@10.10.0.33:22/usr/bin/python)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Remote Python 2.6.6 (ssh://gcpadmin@10.10.0.33:22/usr/bin/python)" project-jdk-type="Python SDK" />
   <component name="VagrantSettings">
     <option name="instanceFolder" value="" />
     <option name="vagrantExecutable" value="vagrant.bat" />

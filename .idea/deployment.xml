@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="datawarehousedb01" showNewOnTargetInSync="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="datawarehousedb01" showNewOnTargetInSync="false">
     <serverData>
       <paths name="datawarehousedb01">
         <serverdata>
           <mappings>
             <mapping deploy="/iostatToCharts" local="$PROJECT_DIR$" web="/" />
           </mappings>
-          <excludedPaths>
-            <excludedPath local="true" path="$PROJECT_DIR$/.idea" />
-          </excludedPaths>
         </serverdata>
       </paths>
       <paths name="logPusher">
@@ -20,5 +17,6 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>
