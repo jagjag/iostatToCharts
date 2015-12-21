@@ -18,12 +18,12 @@ class iostatParser():
             patttitlename = re.compile('Device:.*')
 
             from itertools import islice
-            input_file = open(filepath,'r').readlines(400)
-            #input_file = open(filepath,'r')
+            #input_file = open(filepath,'r').readlines(400)  # For test only
+            input_file = open(filepath,'r')
             for x in islice(input_file, 1, None):
                 if pattnewline.findall(x):
                     continue
-                elif pattdatetime.findall(x):   ## TODO: have problem here
+                elif pattdatetime.findall(x):
                     # 12/11/2015 09:30:46 AM
                     timeArray = time.strptime(x.strip(),"%m/%d/%Y %I:%M:%S %p")
                     timeStamp = float(time.mktime(timeArray))
