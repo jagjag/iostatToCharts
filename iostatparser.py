@@ -35,9 +35,8 @@ class iostatParser():
                         for y1 in y:
                             if patttitlename.findall(y1):
                                 continue
-
                             tdict={}
-                            tdict.setdefault(y1,{})
+                            tdict.setdefault(str(y1).replace(r'/', '_'), {})
                             self.datatitle.append(copy.deepcopy(tdict))
                     else:
                         continue
@@ -80,7 +79,7 @@ class iostatParser():
                     dataItr=0
                     while(dataItr < len(self.datatitle)):
                         self.datatitle[dataItr].setdefault(self.datatitle[dataItr].keys()[0]).\
-                            setdefault(str(realdata[0]),[]).append([str(self.datadatetime), realdata[dataItr]])
+                            setdefault(str(realdata[0]),[]).append([str(self.datadatetime), realdata[dataItr+1]])
                         #if self.datatitle[dataItr][self.datatitle[dataItr].keys()[0]] == {} :
                         #    tmpdic={}
                         #  self.datatitile is a list , which is a container of iostat column
