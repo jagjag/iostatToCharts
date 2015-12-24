@@ -7,7 +7,7 @@ from iostatparser import  *
 
 def main():
     import os
-    datalist = iostatParser(os.path.realpath('data/iostat.data')).get()
+    datalist = iostatParser(os.path.realpath('data/iostat.data.2015122212')).get()
 
     # for i in datalist:  # {'rrqm/s'
     #     os.mkdir(i.keys()[0])   #  TODO  :
