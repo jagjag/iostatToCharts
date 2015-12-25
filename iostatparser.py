@@ -2,8 +2,6 @@ import copy
 import datetime
 import re
 import time
-import os
-import simplejson
 
 
 #  run a  iostat  command like this:
@@ -12,15 +10,15 @@ import simplejson
 
 class iostatParser():
     def __init__(self, filepath):
+        import os
         self.filepath = ''
         if os.path.exists(filepath):
             self.filepath = filepath
         else:
-            raise IOError
-        self.datadatetime = ''
+            raise Exception
+        self.datadatetime = []
         self.datatitle = []
-        self.hostname = ''
-        self.osname = ''
+        self.datadict = {}
 
     def process(self):
         with open(self.filepath) as f:
@@ -31,13 +29,15 @@ class iostatParser():
             pattfirstline = re.compile('\(.*\)')
             #for x in islice(f.readlines(600), 0, None):
             for x in islice(f, 0, None):
-                if pattnewline.findall(x) or pattfirstline.findall(x):
+                if pattnewline.findall(x):
+                    continue
+                elif pattfirstline.findall(x):
                     continue
                 elif pattdatetime.findall(x):
                     #  12/11/2015 09:30:46 AM
                     timeArray = time.strptime(x.strip(), "%m/%d/%Y %I:%M:%S %p")
                     timeStamp = float(time.mktime(timeArray))
-                    self.datadatetime = datetime.datetime.utcfromtimestamp(timeStamp)
+                    self.datadatetime.append(datetime.datetime.utcfromtimestamp(timeStamp))
                     # print self.datadatetime
                     # self.datadatetime=x
                 elif patttitlename.findall(x):
@@ -83,7 +83,8 @@ class iostatParser():
                     dataItr = 0
                     while (dataItr < len(self.datatitle)):
                         self.datatitle[dataItr].setdefault(self.datatitle[dataItr].keys()[0]). \
-                            setdefault(str(realdata[0]), []).append([str(self.datadatetime), realdata[dataItr + 1]])
+                            setdefault(str(realdata[0]), []).append(realdata[dataItr + 1])
+                        #   setdefault(str(realdata[0]), []).append([str(self.datadatetime), realdata[dataItr + 1]])
                         # if self.datatitle[dataItr][self.datatitle[dataItr].keys()[0]] == {} :
                         #    tmpdic={}
                         #  self.datatitile is a list , which is a container of iostat column
@@ -91,6 +92,7 @@ class iostatParser():
                         #  self.datatitle[dataItr].keys()[0]) is a string , which is the key of self.datatitle[dataItr]
                         dataItr = dataItr + 1
         f.close()
+
 
     def show(self):
         for i in self.datatitle:
@@ -101,14 +103,18 @@ class iostatParser():
         return json.dumps(self.datatitle, separators=(',', ':'), sort_keys=True, indent=4)
 
     def get(self):
+        # self.process()
         return self.datatitle
+
+    def getdatatimelist(self):
+        return self.datadatetime
 
 
 if __name__ == '__main__':
     import os
-
     aiosatp = iostatParser(os.path.realpath('data/iostat.data.2015122212'))
     aiosatp.process()
+    aiosatp.show()
     #aiosatp.show()
-    print aiosatp.tojson()
-    print len(aiosatp.get())
+    # print aiosatp.tojson()
+    #print len(aiosatp.get())
