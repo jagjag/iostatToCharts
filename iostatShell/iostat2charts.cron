@@ -14,4 +14,4 @@ HOME=/
 # |  |  |  |  |
 # *  *  *  *  * user-name command to be executed
 
-00 12  *  *  * /bin/bash  /home/gcpadmin/iostat/split.bash
+00 12  *  *  * /bin/bash  /some/your/path/split.bash
