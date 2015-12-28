@@ -1,16 +1,12 @@
 #!/bin/bash
+#  version 1.0
+#  JJmomark
 
-#
-#
-#  version 1.0  
-#
-#  Jiang Jiang
+Interval=30
+io_base=/home/gcpadmin/iostat/data
+killall -u gcpadmin  iostat
+cp -r ${io_base}/iostat.data  ${io_base}/iostat.data.`date +%Y%m%d`
+>${io_base}/iostat.data
+nohup /usr/bin/iostat -dNxt ${Interval} >> ${io_base}/iostat.data &
 
 
-
-
-bk_base=/home/gcpadmin/iostat/data
-
-cp -r ${bk_base}/iostat.data  ${bk_base}/iostat.data.`date +%Y%m%d%H` 
-
->${bk_base}/iostat.data
