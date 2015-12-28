@@ -9,7 +9,7 @@ add  iostat2charts.cron to your crontab
 run split.bash immediately , if your like
 
 ## run
-# modify run.py to your data path before you run
+modify run.py to your data path before you run
 python run.py
 
 
