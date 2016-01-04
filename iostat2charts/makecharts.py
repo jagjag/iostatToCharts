@@ -84,8 +84,10 @@ class MakeCharts:
         """
         from matplotlib import pyplot as plt
         plt.figure(figsize=(25.6, 14.4))
-        plt.title(titilecol + ' ' + titilerow)
-        plt.text(0.05, 0.95, titilecol + '' + titilerow, verticalalignment="top", fontsize=18)
+        plt.title(
+            titilecol + ' -- ' + titilerow + ' -- [' + datadatetime[0].strftime("%Y-%m-%d-%H") + '->' + datadatetime[
+                -1].strftime("%Y-%m-%d-%H") + ']', color='red', fontsize=20)
+        # plt.text(0.05, 0.95, titilecol + '' + titilerow, verticalalignment="top", fontsize=16)
         # plt.text(0.05, 2.15, str(datadatetime[0]), verticalalignment="top", fontsize=16)
         plt.xlabel("Timestamp")
         plt.ylabel(titilecol)
