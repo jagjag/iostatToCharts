@@ -16,5 +16,4 @@ HOME=/
 export LANG=en_US.UTF-8
 00 12  *  *  * /bin/bash  /some/your/path/split.bash
 
-yesterday=`date --date='a day ago' '+%Y%m%d'`
-10 12  *  *  * /bin/python  /some/your/path/run.py "someyoufile.${yesterday}"
+10 12  *  *  * /bin/bash /some/your/path/run.bash
