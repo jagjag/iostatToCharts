@@ -1,9 +1,10 @@
-from distutils.core import setup
+# from distutils.core import setup
+from setuptools import setup, find_packages
 
 setup(
         name='iostatToCharts',
         version='0.1',
-        packages=['iostat2charts'],
+        packages=find_packages(),
         url='http://github.com/jagjag/iostattocharts',
         license='GPL',
         author='JJmomark',

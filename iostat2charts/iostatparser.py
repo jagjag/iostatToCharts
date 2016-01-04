@@ -25,7 +25,8 @@ class IostatParser:
         with open(self.filepath) as f:
             from itertools import islice
             pattnewline = re.compile('^$')
-            pattdatetime = re.compile('^\d.*[P|A]M$')
+            pattdatetime12 = re.compile('^\d.*[P|A]M$')
+            pattdatetime = re.compile('^[01][0-9]\/[0-3][0-9]\/[0-9][0-9]\s[012][0-9]\:[0-9][0-9]\:[0-9[0-9]')
             patttitlename = re.compile('Device:.*')
             pattfirstline = re.compile('\(.*\)')
             # for x in islice(f.readlines(600), 0, None):
@@ -34,12 +35,17 @@ class IostatParser:
                     continue
                 elif pattfirstline.findall(x):
                     continue
-                elif pattdatetime.findall(x):  # get datetime for every iostat table . and convert it to 24 Hour format
+                elif pattdatetime12.findall(
+                        x):  # get datetime for every iostat table . and convert it to 24 Hour format
                     #  12/11/2015 09:30:46 AM
                     timeArray = time.strptime(x.strip(), "%m/%d/%Y %I:%M:%S %p")
                     timeStamp = float(time.mktime(timeArray))
+                    self.datadatetime.append(datetime.datetime.utcfromtimestamp(timeStamp))
+                elif pattdatetime.findall(x):
+                    #  12/11/2015 09:30:46 AM
+                    timeArray = time.strptime(x.strip(), "%m/%d/%y %H:%M:%S")
+                    timeStamp = float(time.mktime(timeArray))
                     self.datadatetime.append(datetime.datetime.utcfromtimestamp(timeStamp))  # put datetime into list
-                    # print self.datadatetime
                 elif patttitlename.findall(x):  # get column of iostat tables
                     if self.datalist == []:
                         y = x.strip().split()
@@ -60,6 +66,9 @@ class IostatParser:
                     while dataitr < len(self.datalist):
                         self.datalist[dataitr].setdefault(self.datalist[dataitr].keys()[0]). \
                             setdefault(str(realdata[0]), []).append(realdata[dataitr + 1])
+                        # print self.datalist[dataitr].keys()[0]
+                        # print str(realdata[0])
+                        # print realdata[dataitr + 1]
                         #  self.datalist is a list , which is a container of iostat column
                         #  self.datalist[dataitr] is dict .
                         #  self.datalist[dataitr].keys()[0]) is a string , which is the key of self.datalist[dataitr]
