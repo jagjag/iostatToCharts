@@ -3,7 +3,6 @@
 import copy
 import datetime
 import re
-import time
 
 
 class IostatParser:
@@ -38,14 +37,12 @@ class IostatParser:
                 elif pattdatetime12.findall(
                         x):  # get datetime for every iostat table . and convert it to 24 Hour format
                     #  12/11/2015 09:30:46 AM
-                    timeArray = time.strptime(x.strip(), "%m/%d/%Y %I:%M:%S %p")
-                    timeStamp = float(time.mktime(timeArray))
-                    self.datadatetime.append(datetime.datetime.utcfromtimestamp(timeStamp))
+                    timearray = datetime.datetime.strptime(x.strip(), "%m/%d/%Y %I:%M:%S %p")
+                    self.datadatetime.append(timearray)
                 elif pattdatetime.findall(x):
                     #  12/11/2015 09:30:46 AM
-                    timeArray = time.strptime(x.strip(), "%m/%d/%y %H:%M:%S")
-                    timeStamp = float(time.mktime(timeArray))
-                    self.datadatetime.append(datetime.datetime.utcfromtimestamp(timeStamp))  # put datetime into list
+                    timearray = datetime.datetime.strptime(x.strip(), "%m/%d/%y %H:%M:%S")
+                    self.datadatetime.append(timearray)
                 elif patttitlename.findall(x):  # get column of iostat tables
                     if self.datalist == []:
                         y = x.strip().split()
